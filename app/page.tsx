@@ -1,6 +1,6 @@
 'use client'
+import { Movie } from "@/types/api";
 import Link from "next/link"
-import { Movie } from "../models/movie"
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
 

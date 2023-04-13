@@ -1,4 +1,4 @@
-import { MoveDetailsView } from "@/models/movieDetailsView"
+import { MoveDetailsView } from "@/types/api"
 
 async function getMovie(movieId: string) {
     const res = await fetch(`http://localhost:8081/api/v1/movies/${movieId}`, { next: { revalidate: 10 } })

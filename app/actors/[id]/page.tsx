@@ -1,5 +1,4 @@
-import { Actor } from '../../../models/actor';
-
+import { Actor } from "@/types/api"
 
 async function getActor(actorId: string) {
     const res = await fetch(`http://localhost:8081/api/v1/actors/${actorId}`, { next: { revalidate: 10 } })
