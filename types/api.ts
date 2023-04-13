@@ -50,3 +50,26 @@ export interface TitleType {
   id?: number;
   name?: string;
 }
+
+export interface TitleBasics {
+  tconst: string;
+  titleType: TitleType;
+  primaryTitle: string;
+  originalTitle: string;
+  isAdult: boolean;
+  startYear: number;
+  endYear?: number | null;
+  runtimeMinutes: number;
+  genres: Genre[];
+  directors: NameBasics[];
+  writers: NameBasics[];
+}
+
+export interface NameBasics { 
+  id: string;
+  primaryName: string;
+  birthYear: number;
+  deathYear?: number;
+  professions?: Profession[];
+  knownForTitles?: TitleBasics[];
+}
