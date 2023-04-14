@@ -50,6 +50,7 @@ export default async function Movie({ params }: any) {
 
       <div>
         <form className="d-flex flex-column" onSubmit={updateMovieOnSubmit}>
+          <h3>Update</h3>
           <label>Primary Title</label>
           <input type="text" value={newMovie.titleType} onChange={handeOnChange} />
           <label>Original Title</label>
@@ -70,7 +71,7 @@ export default async function Movie({ params }: any) {
               })
             }
           />
-          <button type="submit">Submit</button>
+          <button type="submit">Update</button>
         </form>
       </div>
     </main>
