@@ -14,10 +14,7 @@ export async function deleteActor(id: string): Promise<NameBasics> {
   return data;
 }
 
-export async function updateActor(
-  id: string,
-  nameBasics: NameBasicsApi
-): Promise<NameBasics> {
+export async function updateActor(id: string, nameBasics: NameBasicsApi): Promise<NameBasics> {
   const res = await fetch(`${API_BASE_URL}${id}`, {
     method: "PUT",
     body: JSON.stringify(nameBasics),
