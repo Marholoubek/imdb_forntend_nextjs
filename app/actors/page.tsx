@@ -1,6 +1,6 @@
 'use client'
+import { Actor } from "@/types/api";
 import Link from "next/link"
-import { Actor } from "../../models/actor"
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
 
