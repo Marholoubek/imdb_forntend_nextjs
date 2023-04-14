@@ -1,7 +1,9 @@
 'use client'
-import { Movie } from "@/types/api";
+import { Movie, TitleBasicsApi } from "@/types/api";
 import Link from "next/link"
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { ChangeEvent, FormEvent, useState } from "react";
+import { createMovie } from "./functions";
 
 
 
@@ -64,6 +66,28 @@ export default async function Home() {
     router.push(constructRoute(search, 0));
   }
 
+  const [newMovie, setNewMovie] = useState<TitleBasicsApi>({
+    titleType: "",
+    primaryTitle: "",
+    originalTitle: "",
+    startYear: 0,
+    endYear: 0,
+    runtimeMinutes: 0,
+    isAdult: false,
+  });
+
+  function handleOnChange(event: ChangeEvent<HTMLInputElement>) {
+    const { name, value } = event.target;
+    setNewMovie((prev) => {
+      return { ...prev, [name]: value };
+    });
+  }
+
+  async function updateMovieOnSubmit(event: FormEvent) {
+    event.preventDefault();
+    const res = await createMovie(newMovie);
+    console.log(res);
+  }
 
   return (
     <main className="flex flex-wrap justify-center flex-col items-center min-h-screen py-2">
@@ -89,7 +113,31 @@ export default async function Home() {
         <p className="p-4">Page {pageNumber + 1} of {totalPages}</p>
         {pageNumber < totalPages - 1 && <Link href={constructRoute(searchParams.get('search') ?? undefined, pageNumber + 1)}>Next</Link>}
       </div>
-
+      
+      <form className="d-flex flex-column" onSubmit={updateMovieOnSubmit}>
+        <h3>Add Move</h3>
+        <label>Primary Title</label>
+        <input type="text" value={newMovie.titleType} onChange={handleOnChange} />
+        <label>Original Title</label>
+        <input type="text" value={newMovie.originalTitle} onChange={handleOnChange} />
+        <label>Start Year</label>
+        <input type="text" value={newMovie.startYear} onChange={handleOnChange} />
+        <label>End Year</label>
+        <input type="text" value={newMovie.endYear} onChange={handleOnChange} />
+        <label>Runtime Minutes</label>
+        <input type="text" value={newMovie.runtimeMinutes} onChange={handleOnChange} />
+        <label>Is Adult</label>
+        <input
+          type="checkbox"
+          checked={newMovie.isAdult}
+          onChange={(event) =>
+            setNewMovie((prev) => {
+              return { ...prev, isAdult: event.target.checked };
+            })
+          }
+        />
+        <button type="submit">Add Movie</button>
+      </form>
     </main>
   )
 }
