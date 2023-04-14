@@ -7,6 +7,7 @@ export async function createMovie(titleBasics: TitleBasicsApi): Promise<TitleBas
     method: "POST",
     body: JSON.stringify(titleBasics),
   });
+  console.log(res);
   const data = await res.json();
   return data;
 }

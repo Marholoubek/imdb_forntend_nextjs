@@ -13,18 +13,21 @@ async function getMovie(movieId: string) {
 }
 
 export default async function Movie({ params }: any) {
+  const [newMovie, setNewMovie] = useState<TitleBasicsApi>({
+    titleType: "",
+    primaryTitle: "",
+    originalTitle: "",
+    startYear: 0,
+    endYear: 0,
+    runtimeMinutes: 0,
+    isAdult: false,
+  });
+
+
   const movieId = params.id;
   const movie: MoveDetailsView = await getMovie(movieId);
 
-  const [newMovie, setNewMovie] = useState<TitleBasicsApi>({
-    titleType: movie.titleType || "",
-    primaryTitle: movie.primaryTitle || "",
-    originalTitle: movie.originalTitle || "",
-    startYear: movie.startYear || 0,
-    endYear: movie.endYear || 0,
-    runtimeMinutes: movie.runtimeMinutes || 0,
-    isAdult: movie.isAdult || false,
-  });
+
 
   function handeOnChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;

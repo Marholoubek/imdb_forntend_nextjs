@@ -48,6 +48,15 @@ function constructRoute(search?: string, page?: number) {
 }
 
 export default async function Home() {
+  const [newMovie, setNewMovie] = useState<TitleBasicsApi>({
+    titleType: "",
+    primaryTitle: "",
+    originalTitle: "",
+    startYear: 0,
+    endYear: 0,
+    runtimeMinutes: 0,
+    isAdult: false,
+  });
   const router = useRouter();
 
   const searchParams = useSearchParams();
@@ -66,15 +75,7 @@ export default async function Home() {
     router.push(constructRoute(search, 0));
   }
 
-  const [newMovie, setNewMovie] = useState<TitleBasicsApi>({
-    titleType: "",
-    primaryTitle: "",
-    originalTitle: "",
-    startYear: 0,
-    endYear: 0,
-    runtimeMinutes: 0,
-    isAdult: false,
-  });
+
 
   function handleOnChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
@@ -108,36 +109,66 @@ export default async function Home() {
         ))}
       </div>
 
-      <div className="flex flex-wrap justify-center">
-        {pageNumber > 0 && <Link href={constructRoute(searchParams.get('search') ?? undefined, pageNumber - 1)}>Previous</Link>}
-        <p className="p-4">Page {pageNumber + 1} of {totalPages}</p>
-        {pageNumber < totalPages - 1 && <Link href={constructRoute(searchParams.get('search') ?? undefined, pageNumber + 1)}>Next</Link>}
+      <div className="flex flex-wrap justify-center space-x-4 items-center">
+        {pageNumber > 0 && (
+          <Link href={constructRoute(searchParams.get("search") ?? undefined, pageNumber - 1)} passHref>
+            <span className="bg-blue-600 text-white font-semibold px-4 py-2 rounded hover:bg-blue-700 cursor-pointer">
+              Previous
+            </span>
+          </Link>
+        )}
+        <p className="text-lg font-medium">
+          Page {pageNumber + 1} of {totalPages}
+        </p>
+        {pageNumber < totalPages - 1 && (
+          <Link href={constructRoute(searchParams.get("search") ?? undefined, pageNumber + 1)} passHref>
+            <span className="bg-blue-600 text-white font-semibold px-4 py-2 rounded hover:bg-blue-700 cursor-pointer">
+              Next
+            </span>
+          </Link>
+        )}
       </div>
-      
-      <form className="d-flex flex-column" onSubmit={updateMovieOnSubmit}>
-        <h3>Add Move</h3>
-        <label>Primary Title</label>
-        <input type="text" value={newMovie.titleType} onChange={handleOnChange} />
-        <label>Original Title</label>
-        <input type="text" value={newMovie.originalTitle} onChange={handleOnChange} />
-        <label>Start Year</label>
-        <input type="text" value={newMovie.startYear} onChange={handleOnChange} />
-        <label>End Year</label>
-        <input type="text" value={newMovie.endYear} onChange={handleOnChange} />
-        <label>Runtime Minutes</label>
-        <input type="text" value={newMovie.runtimeMinutes} onChange={handleOnChange} />
-        <label>Is Adult</label>
-        <input
-          type="checkbox"
-          checked={newMovie.isAdult}
-          onChange={(event) =>
-            setNewMovie((prev) => {
-              return { ...prev, isAdult: event.target.checked };
-            })
-          }
-        />
-        <button type="submit">Add Movie</button>
+
+
+
+      <form onSubmit={updateMovieOnSubmit} className="w-full max-w-lg mx-auto">
+        <div className="flex flex-col space-y-4">
+
+          <h3 className="text-2xl font-semibold mb-4">Add Movie</h3>
+          <label htmlFor="primaryTitle" className="text-lg font-medium">Primary Title</label>
+          <input id="primaryTitle" type="text" value={newMovie.titleType} onChange={handleOnChange} className="border border-gray-300 p-2 rounded" />
+
+          <label htmlFor="originalTitle" className="text-lg font-medium">Original Title</label>
+          <input id="originalTitle" type="text" value={newMovie.originalTitle} onChange={handleOnChange} className="border border-gray-300 p-2 rounded" />
+
+          <label htmlFor="startYear" className="text-lg font-medium">Start Year</label>
+          <input id="startYear" type="text" value={newMovie.startYear} onChange={handleOnChange} className="border border-gray-300 p-2 rounded" />
+
+          <label htmlFor="endYear" className="text-lg font-medium">End Year</label>
+          <input id="endYear" type="text" value={newMovie.endYear} onChange={handleOnChange} className="border border-gray-300 p-2 rounded" />
+
+          <label htmlFor="runtimeMinutes" className="text-lg font-medium">Runtime Minutes</label>
+          <input id="runtimeMinutes" type="text" value={newMovie.runtimeMinutes} onChange={handleOnChange} className="border border-gray-300 p-2 rounded" />
+
+          <div className="flex items-center space-x-2">
+            <label htmlFor="isAdult" className="text-lg font-medium">Is Adult</label>
+            <input
+              id="isAdult"
+              type="checkbox"
+              checked={newMovie.isAdult}
+              onChange={(event) =>
+                setNewMovie((prev) => {
+                  return { ...prev, isAdult: event.target.checked };
+                })
+              }
+              className="form-checkbox h-5 w-5"
+            />
+          </div>
+
+          <button type="submit" className="bg-blue-600 text-white font-semibold px-4 py-2 rounded hover:bg-blue-700">Add Movie</button>
+        </div>
       </form>
+
     </main>
   )
 }
