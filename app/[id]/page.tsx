@@ -1,3 +1,5 @@
+'use client'
+
 import { MoveDetailsView, TitleBasicsApi } from "@/types/api";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { updateMovie } from "../functions";
